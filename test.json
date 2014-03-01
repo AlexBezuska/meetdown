@@ -1,11 +1,13 @@
 {
+ 
   "username" : "asshole",
   "pages" : {
     "test.hbs" : {
-      
+      "layout" : "layout.hbs",
       "title" : "meetdown - home"
     },
     "calendar.hbs" : {
+      "layout" : "layout.hbs",
       "title" : "meetdown - calendar"
     }
   }

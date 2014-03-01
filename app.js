@@ -9,9 +9,10 @@ var dataFileName = args[1];
 
 var handlebars = require('handlebars');
 var fs = require('fs');
+var merge = require('merge');
 
 var data  = JSON.parse(fs.readFileSync(dataFileName, {encoding : 'utf8'}));
-data.page = data.pages[templateFileName];
+data.page = merge(data.page, data.pages[templateFileName]);
 
 var layoutFileName = data.page.layout;
 var layout  = fs.readFileSync(layoutFileName, {encoding : 'utf8'});

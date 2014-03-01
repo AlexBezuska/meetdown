@@ -16,6 +16,8 @@
     "url": "https://github.com/AlexBezuska/meetdown/issues"
   },
   "homepage": "https://github.com/AlexBezuska/meetdown",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "merge": "~1.1.2"
   }
 }

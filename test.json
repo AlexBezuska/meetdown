@@ -1,15 +1,28 @@
 {
  
   "username" : "asshole",
-  "pages" : {
-    "test.hbs" : {
+
+ "page" : {
       "layout" : "layout.hbs",
+      "title" : "meetdown - default"
+    },
+
+  "pages" : {
+
+    "test.hbs" : {
+     
       "title" : "meetdown - home"
     },
+
     "calendar.hbs" : {
-      "layout" : "layout.hbs",
+      
       "title" : "meetdown - calendar"
+    },
+    "whatever.hbs" : {
+      
+   
     }
+
   }
 
 }

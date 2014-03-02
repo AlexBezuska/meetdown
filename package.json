@@ -18,6 +18,7 @@
   "homepage": "https://github.com/AlexBezuska/meetdown",
   "devDependencies": {},
   "dependencies": {
-    "merge": "~1.1.2"
+    "merge": "~1.1.2",
+    "handlebars": "~2.0.0-alpha.1"
   }
 }

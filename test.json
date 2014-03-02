@@ -1,14 +1,14 @@
 {
 	"sourceFolder" : "src",
 	"destinationFolder" : "dest",
-	"username" : "asshole",
+	"username" : "username@email.com",
 
 	"page" : {
 		"layout" : "layout.hbs",
 		"title" : "meetdown - default"
 	},
 	"pages" : {
-		"src/test.html.hbs" : {
+		"src/index.html.hbs" : {
 			"title" : "meetdown - home"
 		},
 		"src/calendar.html.hbs" : {

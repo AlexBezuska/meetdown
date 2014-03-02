@@ -42,6 +42,7 @@ function processFolder(sourceFolder, destinationFolder) {
 }
 
 var path = require('path');
+var copyFile = require('./copyFile');
 
 function processFile(sourceFile, destinationFile) {
 	var fileExtention = path.extname(sourceFile);
@@ -52,7 +53,13 @@ function processFile(sourceFile, destinationFile) {
 		destinationFile = fileNameParts.join('.');
 		console.log(sourceFile + " --> " + destinationFile);
 		build(sourceFile, destinationFile, data);
-	}
+	} else {
+    copyFile(sourceFile, destinationFile, function(err){
+      if (err){
+        console.error(err);
+      }
+    });
+  }
 
 }
 

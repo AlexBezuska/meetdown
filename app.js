@@ -20,7 +20,6 @@ function build(sourcePath, destinationPath, context) {
 	var layout  = fs.readFileSync(layoutFileName, { encoding: 'utf8' });
 	var page  = fs.readFileSync(sourcePath, { encoding: 'utf8' });
 
-
 	handlebars.registerPartial('body', page);
 	var template = handlebars.compile(layout);
 
@@ -54,13 +53,12 @@ function processFile(sourceFile, destinationFile) {
 		console.log(sourceFile + " --> " + destinationFile);
 		build(sourceFile, destinationFile, data);
 	} else {
-    copyFile(sourceFile, destinationFile, function(err){
-      if (err){
-        console.error(err);
-      }
-    });
-  }
-
+		copyFile(sourceFile, destinationFile, function(err){
+			if (err){
+				console.error(err);
+			}
+		});
+	}
 }
 
 processFolder(data.sourceFolder, data.destinationFolder);

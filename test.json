@@ -1,21 +1,18 @@
 {
-  "sourceFolder" : "src",
-  "destinationFolder" : "dest",
-  "username" : "asshole",
+	"sourceFolder" : "src",
+	"destinationFolder" : "dest",
+	"username" : "asshole",
 
- "page" : {
-      "layout" : "layout.hbs",
-      "title" : "meetdown - default"
-    },
-
-  "pages" : {
-
-    "src/test.html.hbs" : {
-     "title" : "meetdown - home"
-    },
-
-    "src/calendar.html.hbs" : {
-      "title" : "meetdown - calendar"
-    },
-  }
+	"page" : {
+		"layout" : "layout.hbs",
+		"title" : "meetdown - default"
+	},
+	"pages" : {
+		"src/test.html.hbs" : {
+			"title" : "meetdown - home"
+		},
+		"src/calendar.html.hbs" : {
+			"title" : "meetdown - calendar"
+		}
+	}
 }

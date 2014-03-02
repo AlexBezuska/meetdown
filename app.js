@@ -4,18 +4,54 @@ if (args.length !== 1) {
 	process.exit(1);
 }
 
+var fs = require('fs');
+var path = require('path');
+
 var dataFileName = args[0];
+var data = JSON.parse(fs.readFileSync(dataFileName, { encoding: 'utf8' }));
+processFolder(data.sourceFolder, data.destinationFolder, data);
+
+function processFolder(sourceFolder, destinationFolder, context) {
+	fs.readdir(sourceFolder, function(err, files) {
+		if (err) {
+			console.error(err);
+			throw err;
+		}
+		for (var i = 0; i < files.length; i++) {
+			var sourcePath = path.join(sourceFolder, files[i]);
+			var destPath = path.join(destinationFolder, files[i]);
+			processFile(sourcePath, destPath, context);
+		}
+	});
+}
+
+var copyFile = require('./copyFile');
+
+function processFile(sourceFile, destinationFile, context) {
+	var fileExtention = path.extname(sourceFile);
+
+	if (fileExtention === '.hbs') {
+		var fileNameParts = destinationFile.split('.');
+		fileNameParts.pop();
+		destinationFile = fileNameParts.join('.');
+		console.log(sourceFile + " --> " + destinationFile);
+		build(sourceFile, destinationFile, context);
+	} else {
+		copyFile(sourceFile, destinationFile, function(err){
+			if (err) {
+				console.error(err);
+			}
+		});
+	}
+}
 
 var handlebars = require('handlebars');
-var fs = require('fs');
 var merge = require('merge');
-
-var data = JSON.parse(fs.readFileSync(dataFileName, { encoding: 'utf8' }));
 
 function build(sourcePath, destinationPath, context) {
 	context = merge(true, context);
 	context.page = merge(context.page, context.pages[sourcePath]);
-	console.log(context.page);
+
 	var layoutFileName = context.page.layout;
 	var layout  = fs.readFileSync(layoutFileName, { encoding: 'utf8' });
 	var page  = fs.readFileSync(sourcePath, { encoding: 'utf8' });
@@ -25,40 +61,3 @@ function build(sourcePath, destinationPath, context) {
 
 	fs.writeFileSync(destinationPath, template(context), { encoding: 'utf8' });
 }
-
-function processFolder(sourceFolder, destinationFolder) {
-	fs.readdir(sourceFolder, function(err, files) {
-		if (err) {
-			console.error(err);
-			throw err;
-		}
-		for (var i = 0; i < files.length; i++) {
-			var sourcePath = path.join(sourceFolder, files[i]);
-			var destPath = path.join(destinationFolder, files[i]);
-			processFile(sourcePath, destPath);
-		}
-	});
-}
-
-var path = require('path');
-var copyFile = require('./copyFile');
-
-function processFile(sourceFile, destinationFile) {
-	var fileExtention = path.extname(sourceFile);
-
-	if (fileExtention === '.hbs') {
-		var fileNameParts = destinationFile.split('.');
-		fileNameParts.pop();
-		destinationFile = fileNameParts.join('.');
-		console.log(sourceFile + " --> " + destinationFile);
-		build(sourceFile, destinationFile, data);
-	} else {
-		copyFile(sourceFile, destinationFile, function(err){
-			if (err){
-				console.error(err);
-			}
-		});
-	}
-}
-
-processFolder(data.sourceFolder, data.destinationFolder);

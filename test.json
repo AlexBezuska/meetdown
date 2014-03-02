@@ -17,11 +17,5 @@
     "src/calendar.html.hbs" : {
       "title" : "meetdown - calendar"
     },
-    "whatever.hbs" : {
-      
-   
-    }
-
   }
-
 }

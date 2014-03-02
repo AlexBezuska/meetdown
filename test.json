@@ -1,5 +1,6 @@
 {
- 
+  "sourceFolder" : "src",
+  "destinationFolder" : "dest",
   "username" : "asshole",
 
  "page" : {
@@ -9,13 +10,11 @@
 
   "pages" : {
 
-    "test.hbs" : {
-     
-      "title" : "meetdown - home"
+    "src/test.html.hbs" : {
+     "title" : "meetdown - home"
     },
 
-    "calendar.hbs" : {
-      
+    "src/calendar.html.hbs" : {
       "title" : "meetdown - calendar"
     },
     "whatever.hbs" : {

@@ -4,8 +4,10 @@ if (args.length !== 1) {
 	process.exit(1);
 }
 
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
+var copyFile = require("./copyfile");
+var sass = require("node-sass");
 
 var dataFileName = args[0];
 var data = JSON.parse(fs.readFileSync(dataFileName, { encoding: 'utf8' }));
@@ -25,17 +27,29 @@ function processFolder(sourceFolder, destinationFolder, context) {
 	});
 }
 
-var copyFile = require('./copyFile');
-
 var filenameTransforms = {
 	".hbs": function(filename) {
 		var parts = filename.split('.');
 		parts.pop();
 		return parts.join('.');
+	},
+	".scss": function(filename) {
+		var parts = filename.split('.');
+		parts.pop();
+		parts.push("css");
+		return parts.join('.');
 	}
 };
 var fileTransforms = {
-	".hbs": build
+	".hbs": build,
+	".scss": function(sourcePath, destinationPath, context) {
+		sass.render({
+			file: sourcePath,
+			success: function(css) {
+				fs.writeFileSync(destinationPath, css, { encoding: 'utf8' });
+			}
+		});
+	}
 };
 
 function processFile(sourceFile, destinationFile, context) {

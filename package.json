@@ -19,6 +19,7 @@
   "devDependencies": {},
   "dependencies": {
     "merge": "~1.1.2",
-    "handlebars": "~2.0.0-alpha.1"
+    "handlebars": "~2.0.0-alpha.1",
+    "node-sass": "~0.8.1"
   }
 }

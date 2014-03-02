@@ -27,15 +27,31 @@ function processFolder(sourceFolder, destinationFolder, context) {
 
 var copyFile = require('./copyFile');
 
-function processFile(sourceFile, destinationFile, context) {
-	var fileExtention = path.extname(sourceFile);
+var filenameTransforms = {
+	".hbs": function(filename) {
+		var parts = filename.split('.');
+		parts.pop();
+		return parts.join('.');
+	}
+};
+var fileTransforms = {
+	".hbs": build
+};
 
-	if (fileExtention === '.hbs') {
-		var fileNameParts = destinationFile.split('.');
-		fileNameParts.pop();
-		destinationFile = fileNameParts.join('.');
-		console.log(sourceFile + " --> " + destinationFile);
-		build(sourceFile, destinationFile, context);
+function processFile(sourceFile, destinationFile, context) {
+	var ext = path.extname(sourceFile);
+
+	if (typeof filenameTransforms[ext] === 'function') {
+		destinationFile = filenameTransforms[ext](destinationFile);
+	}
+	console.log(sourceFile + " --> " + destinationFile);
+
+	if (typeof fileTransforms[ext] === "function") {
+		context = merge(true, context); // make a copy
+		var contextPagePath = sourceFile.split(path.sep).join("/");
+		context.page = merge(context.page, context.pages[contextPagePath]);
+
+		fileTransforms[ext](sourceFile, destinationFile, context);
 	} else {
 		copyFile(sourceFile, destinationFile, function(err){
 			if (err) {
@@ -49,9 +65,6 @@ var handlebars = require('handlebars');
 var merge = require('merge');
 
 function build(sourcePath, destinationPath, context) {
-	context = merge(true, context);
-	context.page = merge(context.page, context.pages[sourcePath]);
-
 	var layoutFileName = context.page.layout;
 	var layout  = fs.readFileSync(layoutFileName, { encoding: 'utf8' });
 	var page  = fs.readFileSync(sourcePath, { encoding: 'utf8' });

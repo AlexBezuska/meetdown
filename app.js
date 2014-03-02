@@ -1,6 +1,6 @@
 var args = process.argv.slice(2);
-if (args.length != 1) {
-	console.error("Usage: node app.js data.json ");
+if (args.length !== 1) {
+	console.error("Usage: node app.js data.json");
 	process.exit(1);
 }
 
@@ -12,7 +12,7 @@ var merge = require('merge');
 
 var data = JSON.parse(fs.readFileSync(dataFileName, { encoding: 'utf8' }));
 
-function build (sourcePath, destinationPath, context) {
+function build(sourcePath, destinationPath, context) {
 	context = merge(true, context);
 	context.page = merge(context.page, context.pages[sourcePath]);
 	console.log(context.page);
@@ -33,7 +33,7 @@ function processFolder(sourceFolder, destinationFolder) {
 			console.error(err);
 			throw err;
 		}
-		for (var i=0; i < files.length; i++) {
+		for (var i = 0; i < files.length; i++) {
 			var sourcePath = path.join(sourceFolder, files[i]);
 			var destPath = path.join(destinationFolder, files[i]);
 			processFile(sourcePath, destPath);

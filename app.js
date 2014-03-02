@@ -25,7 +25,7 @@ function build (sourcePath, destinationPath, context) {
 	var template = handlebars.compile(layout);
 
 	fs.writeFileSync(destinationPath, template(context), { encoding: 'utf8' });
-};
+}
 
 function processFolder(sourceFolder, destinationFolder) {
 	fs.readdir(sourceFolder, function(err, files) {
